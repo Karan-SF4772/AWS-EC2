@@ -15,16 +15,17 @@ namespace WordtoPDF
         private static IAmazonS3 s3Client;
         static async Task Main()
         {
+            var credentials = new Amazon.Runtime.BasicAWSCredentials("accessKey", "secretKey");
             var config = new AmazonS3Config
             {
                 RegionEndpoint = bucketRegion
             };
-            s3Client = new AmazonS3Client(config);
+            s3Client = new AmazonS3Client(credentials, config);
             Console.WriteLine("Kindly enter the S3 bucket name: ");
             string bucketName = Console.ReadLine();
-            Console.WriteLine("Kindly enter the input folder name that has the input PowerPoints: ");
+            Console.WriteLine("Kindly enter the input folder name that has the input Word Document: ");
             string inputFolderName = Console.ReadLine();
-            Console.WriteLine("Kindly enter the output folder name in which the output images should be stored: ");
+            Console.WriteLine("Kindly enter the output folder name in which the output Pdf should be stored: ");
             string outputFolderName = Console.ReadLine();
             //Gets the list of imput files from the input folder.
             List<string> inputFileNames = await ListFilesAsync(inputFolderName, bucketName);
