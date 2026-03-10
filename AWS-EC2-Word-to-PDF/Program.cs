@@ -63,7 +63,7 @@ namespace WordtoPDF
                         files.Add(fileName);
                     }
                     request.ContinuationToken = response.NextContinuationToken;
-                } while ((bool)response.IsTruncated);
+                } while (response.IsTruncated);
                 return files;
             }
             catch (AmazonS3Exception e)
