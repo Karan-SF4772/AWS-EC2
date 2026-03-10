@@ -24,17 +24,46 @@ namespace WordtoPDF
             s3Client = new AmazonS3Client(credentials, config);
             Console.WriteLine("Kindly enter the S3 bucket name: ");
             string bucketName = Console.ReadLine();
-            Console.WriteLine("Kindly enter the input folder name that has the input Word Document: ");
-            string inputFolderName = Console.ReadLine();
+            //Console.WriteLine("Kindly enter the input folder name that has the input Word Document: ");
+            //string inputFolderName = Console.ReadLine();
             Console.WriteLine("Kindly enter the output folder name in which the output Pdf should be stored: ");
             string outputFolderName = Console.ReadLine();
             //Gets the list of imput files from the input folder.
-            List<string> inputFileNames = await ListFilesAsync(inputFolderName, bucketName);
+            //List<string> inputFileNames = await ListFilesAsync(inputFolderName, bucketName);
 
-            for (int i = 0; i < inputFileNames.Count; i++)
+            //for (int i = 0; i < inputFileNames.Count; i++)
+            //{
+            //    //Converts PPTX to Image.
+            //    await ConvertWordtoPDF(inputFileNames[i], inputFolderName, bucketName, outputFolderName);
+            //}
+            await ConvertWordtoPDF("HelloWorld", bucketName, outputFolderName);
+        }
+        static async Task ConvertWordtoPDF(string inputFileName, string bucketName, string outputFolderName)
+        {
+            try
             {
-                //Converts PPTX to Image.
-                await ConvertWordtoPDF(inputFileNames[i], inputFolderName, bucketName, outputFolderName);
+                using (WordDocument document = new WordDocument())
+                {
+                    document.EnsureMinimal();
+                    document.LastParagraph.AppendText("Hello Wordl");
+                    //Initialize DocIORenderer.
+                    DocIORenderer renderer = new DocIORenderer();
+                    PdfDocument pdfDocument = renderer.ConvertToPDF(document);
+                    MemoryStream outputStream = new MemoryStream();
+                    pdfDocument.Save(outputStream);
+                    // reset before upload
+                    outputStream.Position = 0;
+                    //Uploads the pdf to the S3 bucket.
+                    await UploadPdfAsync(outputStream, $"{Path.GetFileNameWithoutExtension(inputFileName)}" + ".pdf", bucketName, outputFolderName);
+                }                
+            }
+            catch (AmazonS3Exception e)
+            {
+                Console.WriteLine($"Error encountered on server. Message:'{e.Message}'");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Unknown error encountered. Message:'{e.Message}'");
             }
         }
         private static async Task<List<string>> ListFilesAsync(string inputFolderName, string bucketName)
