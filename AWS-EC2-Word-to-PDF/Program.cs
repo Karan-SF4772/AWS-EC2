@@ -15,11 +15,8 @@ namespace WordtoPDF
         private static IAmazonS3 s3Client;
         static async Task Main()
         {
-            Console.WriteLine("Kindly enter the accessKey: ");
-            string accessKey = Console.ReadLine();
-            Console.WriteLine("Kindly enter the secretKey: ");
-            string secretKey = Console.ReadLine();
-            var credentials = new Amazon.Runtime.BasicAWSCredentials(accessKey, secretKey);
+            
+            var credentials = new Amazon.Runtime.BasicAWSCredentials("AKIASCRGFNWJGTKKK3GJ", "SSsROv24+PwSKeGxMig8dyXqMoJK8XiK6ptvE5kh");
             var config = new AmazonS3Config
             {
                 RegionEndpoint = bucketRegion
@@ -154,4 +151,5 @@ namespace WordtoPDF
             }
         }
     }
+
 }
