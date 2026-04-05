@@ -8,9 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="HarfBuzzSharp.NativeAssets.Linux" Version="8.3.1.2" />
-    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="3.119.1" />
-    <PackageReference Include="Syncfusion.DocIORenderer.Net.Core" Version="33.1.46" />
+    <PackageReference Include="HarfBuzzSharp.NativeAssets.Linux" Version="8.3.0.1" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="3.116.1" />
+    <PackageReference Include="Syncfusion.DocIORenderer.Net.Core" Version="31.2.15" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,15 @@
+[Unit]
+Description=Dotnet Application
+After=network.target
+
+[Service]
+WorkingDirectory=/var/www/html
+ExecStartPre=/usr/bin/dotnet build
+ExecStart=/usr/bin/dotnet run
+Restart=always
+User=root
+EnvironmentFile=/var/www/html/.env
+
+[Install]
+WantedBy=multi-user.target
+

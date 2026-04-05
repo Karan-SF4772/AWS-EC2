@@ -1,0 +1,14 @@
+version: 0.2
+phases:
+  build:
+    commands:
+      - echo "Generating configuration files..."
+      - mkdir -p templates/processed
+      - envsubst < templates/raw/env.tmpl > templates/processed/.env
+      - envsubst < templates/raw/logstash/common.tmpl > templates/processed/syslog-tcp-forward.conf
+      - envsubst < templates/raw/filebeat/filebeat.tmpl > templates/processed/filebeat.yml
+      - envsubst < templates/raw/otel_config.tmpl > templates/processed/config.yaml
+
+artifacts:
+  files:
+    - "**/*"
