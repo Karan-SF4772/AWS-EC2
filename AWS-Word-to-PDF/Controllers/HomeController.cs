@@ -53,7 +53,7 @@ namespace Convert_Word_Document_to_PDF.Controllers
         public ActionResult ConvertWordtoPDF()
         {
             //Open the file as Stream
-            using (FileStream docStream = new FileStream(Path.GetFullPath("Data/Template.docx"), FileMode.Open, FileAccess.Read))
+            using (FileStream docStream = new FileStream(Path.GetFullPath("Data/Japanese.docx"), FileMode.Open, FileAccess.Read))
             {
                 //Loads file stream into Word document
                 using (WordDocument wordDocument = new WordDocument(docStream, FormatType.Automatic))
